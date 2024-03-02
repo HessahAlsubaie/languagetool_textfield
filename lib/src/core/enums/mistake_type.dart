@@ -1,30 +1,33 @@
 ///Enumerate several mistake types
 enum MistakeType {
   /// Misspelling mistake type
-  misspelling('misspelling'),
+  misspelling('misspelling', 'خطأ إملائي'),
 
   /// Typographical mistake type
-  typographical('typographical'),
+  typographical('typographical', 'خطأ مطبعي'),
 
   /// Grammar mistake type
-  grammar('grammar'),
+  grammar('grammar', 'خطأ نحوي'),
 
   /// Uncategorized mistake type
-  uncategorized('uncategorized'),
+  uncategorized('uncategorized', 'خطأ غير مصنف'),
 
   /// NonConformance mistake type
-  nonConformance('nonconformance'),
+  nonConformance('nonconformance', 'خطأ عدم المطابقة'),
 
   /// Style mistake type
-  style('style'),
+  style('style', 'خطأ في التنسيق'),
 
   /// Any other mistake type
-  other('other');
+  other('other', 'خطأ من نوع آخر');
 
   /// The string value associated with the MistakeType variant
   final String value;
 
-  const MistakeType(this.value);
+  /// The Arabic translation of the MistakeType variant
+  final String arabicValue;
+
+  const MistakeType(this.value, this.arabicValue);
 
   /// Getting the [MistakeType] from String.
   static MistakeType fromString(String value) {

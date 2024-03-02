@@ -26,7 +26,7 @@ class PopupOverlayRenderer {
           child: Stack(
             children: [
               CustomSingleChildLayout(
-                delegate: PopupOverlayLayoutDelegate(position),
+                delegate: PopupOverlayLayoutDelegate(position, context),
                 child: TapRegion(
                   onTapOutside: (_) => dismiss(),
                   child: popupBuilder(context),
@@ -55,42 +55,45 @@ class PopupOverlayRenderer {
 class PopupOverlayLayoutDelegate extends SingleChildLayoutDelegate {
   /// desired position of popup window
   final Offset position;
+  final BuildContext context; 
 
   /// [PopupOverlayLayoutDelegate] constructor
-  const PopupOverlayLayoutDelegate(this.position);
+  const PopupOverlayLayoutDelegate(this.position, this.context);
 
   @override
   Offset getPositionForChild(Size size, Size childSize) {
-    return _calculatePosition(size, position, childSize);
+    return _calculatePosition(size, position, childSize, context);
   }
 
-  Offset _calculatePosition(Size size, Offset position, Size childSize) {
-    final _popupRect = Rect.fromCenter(
-      center: position,
-      width: childSize.width,
-      height: childSize.height,
-    );
-    double dx = _popupRect.left;
-    // limiting X offset
-    dx = max(0, dx);
-    final rightBorderPosition = dx + childSize.width;
-    final rightScreenBorderOverflow = rightBorderPosition - size.width;
-    if (rightScreenBorderOverflow > 0) {
-      dx -= rightScreenBorderOverflow;
-    }
+Offset _calculatePosition(Size size, Offset position, Size childSize, BuildContext context) {
+  final _popupRect = Rect.fromCenter(
+    center: position,
+    width: childSize.width,
+    height: childSize.height,
+  );
 
-    // under the desired position
-    double dy = max(0, position.dy);
-    final bottomBorderPosition = dy + childSize.height;
-    final bottomScreenBorderOverflow = bottomBorderPosition - size.height;
-    // if not enough space underneath, rendering above the desired position
-    if (bottomScreenBorderOverflow > 0) {
-      final newBottomBorderPosition = position.dy - childSize.height;
-      dy = newBottomBorderPosition;
-    }
+  // Get the height of the keyboard
+  double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
 
-    return Offset(dx, dy);
+  // Calculate vertical position (dy)
+  double dy = position.dy - childSize.height - keyboardHeight; // Display above the desired position and keyboard
+  // Limiting Y offset to be at least 0
+  dy = max(0, dy);
+
+  // Calculate horizontal position (dx)
+  double dx = _popupRect.left;
+  // Limiting X offset
+  dx = max(0, dx);
+  final rightBorderPosition = dx + childSize.width;
+  final rightScreenBorderOverflow = rightBorderPosition - size.width;
+  if (rightScreenBorderOverflow > 0) {
+    dx -= rightScreenBorderOverflow;
   }
+
+  return Offset(dx, dy);
+}
+
+
 
   @override
   bool shouldRelayout(covariant PopupOverlayLayoutDelegate oldDelegate) {

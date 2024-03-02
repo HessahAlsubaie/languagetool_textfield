@@ -190,7 +190,7 @@ class LanguageToolMistakePopup extends StatelessWidget {
                           bottom: _paddingBetweenTitle,
                         ),
                         child: Text(
-                          mistake.type.name.capitalize(),
+                          mistake.type.arabicValue,
                           style: TextStyle(
                             color: Colors.grey.shade700,
                             fontSize: _mistakeNameFontSize,
