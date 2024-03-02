@@ -6,7 +6,6 @@ import 'package:languagetool_textfield/src/core/controllers/language_tool_contro
 import 'package:languagetool_textfield/src/core/langtool_images.dart';
 import 'package:languagetool_textfield/src/domain/mistake.dart';
 import 'package:languagetool_textfield/src/domain/typedefs.dart';
-import 'package:languagetool_textfield/src/utils/extensions/string_extension.dart';
 import 'package:languagetool_textfield/src/utils/popup_overlay_renderer.dart';
 
 /// Builder class that uses specified [popupRenderer] and [mistakeBuilder]
