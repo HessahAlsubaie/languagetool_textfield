@@ -180,56 +180,59 @@ class LanguageToolMistakePopup extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(_borderRadius),
                 ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: _paddingBetweenTitle,
-                        ),
-                        child: Text(
-                          mistake.type.arabicValue,
-                          style: TextStyle(
-                            color: Colors.grey.shade700,
-                            fontSize: _mistakeNameFontSize,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: _titleLetterSpacing,
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: _paddingBetweenTitle,
+                          ),
+                          child: Text(
+                            mistake.type.arabicValue,
+                            style: TextStyle(
+                              color: Colors.grey.shade700,
+                              fontSize: _mistakeNameFontSize,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: _titleLetterSpacing,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: padding),
-                        child: Text(
-                          mistake.message,
-                          style: const TextStyle(
-                            fontSize: _mistakeMessageFontSize,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: padding),
+                          child: Text(
+                            mistake.message,
+                            style: const TextStyle(
+                              fontSize: _mistakeMessageFontSize,
+                            ),
                           ),
                         ),
-                      ),
-                      Wrap(
-                        spacing: _replacementButtonsSpacing,
-                        runSpacing: kIsWeb
-                            ? _replacementButtonsSpacing
-                            : _replacementButtonsSpacingMobile,
-                        children: mistake.replacements
-                            .map(
-                              (replacement) => ElevatedButton(
-                                onPressed: () => _fixTheMistake(replacement),
-                                style: mistakeStyle ??
-                                    ElevatedButton.styleFrom(
-                                      elevation: 0,
-                                      minimumSize: const Size(40, 36),
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 8,
+                        Wrap(
+                          spacing: _replacementButtonsSpacing,
+                          runSpacing: kIsWeb
+                              ? _replacementButtonsSpacing
+                              : _replacementButtonsSpacingMobile,
+                          children: mistake.replacements
+                              .map(
+                                (replacement) => ElevatedButton(
+                                  onPressed: () => _fixTheMistake(replacement),
+                                  style: mistakeStyle ??
+                                      ElevatedButton.styleFrom(
+                                        elevation: 0,
+                                        minimumSize: const Size(40, 36),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                        ),
                                       ),
-                                    ),
-                                child: Text(replacement),
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ],
+                                  child: Text(replacement),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
